@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { register } from './ctrl/auth.js';
+import { registerAdmin } from './ctrl/adminauth.js';
 dotenv.config();
 const app =express();
 app.use(express.json());
@@ -21,3 +22,4 @@ mongoose.connect(process.env.MONGODB_URI)
 })
 
 app.post("/reg", register );
+app.post('/reg-admin',registerAdmin);

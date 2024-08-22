@@ -1,4 +1,5 @@
-import { Mongoose, Schema,model,models } from "mongoose";
+import mongoose from 'mongoose'; 
+const { Schema, model, models } = mongoose;
 
 const AdminSchema =new Schema({
 
@@ -7,8 +8,9 @@ const AdminSchema =new Schema({
         required:true
     },
    email:{
-type:String,
-required:true
+        type:String,
+        required:true,
+        unique:true
    },
     password:{
         type:String,
@@ -20,6 +22,6 @@ required:true
     },
 
 })
-const Admin = mongoose.model('Admin', AdminSchema);
+const Admin = models.Admin || model('Admin', AdminSchema);
 
 export default Admin
