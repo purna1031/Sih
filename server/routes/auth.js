@@ -1,5 +1,5 @@
 import express from 'express'
-import { login } from '../ctrl/auth';
+import { login } from '../ctrl/auth.js';
 const router =express.Router();
 router.post('/login',login);
 export default router;
