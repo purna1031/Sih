@@ -12,13 +12,13 @@ import {
 } from '@chakra-ui/react';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
+  const [rollno, setRollno] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log('Email:', email);
+    console.log('Roll No:', rollno);
     console.log('Password:', password);
   };
 
@@ -28,6 +28,7 @@ const LoginForm = () => {
       align="center"
       justify="center"
       bg={useColorModeValue('gray.50', 'gray.800')}
+      backgroundColor="black"
     >
       <Box
         rounded="lg"
@@ -42,18 +43,20 @@ const LoginForm = () => {
             Login to your account
           </Heading>
           <form onSubmit={handleSubmit}>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
+            <FormControl id="rollno" isRequired>
+              <FormLabel>Roll Number</FormLabel>
               <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder='22PA1A....'
+                value={rollno}
+                onChange={(e) => setRollno(e.target.value)}
               />
             </FormControl>
             <FormControl id="password" mt={4} isRequired>
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
+                placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

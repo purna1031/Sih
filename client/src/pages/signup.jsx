@@ -9,10 +9,13 @@ import {
   Heading,
   Stack,
   useColorModeValue,
+  Text,
+  Link,
 } from '@chakra-ui/react';
 
 const SignupForm = () => {
   const [username, setUsername] = useState('');
+  const [rollno, setRollno] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,6 +28,7 @@ const SignupForm = () => {
       return;
     }
     console.log('Username:', username);
+    console.log('Roll Number:', rollno);
     console.log('Email:', email);
     console.log('Password:', password);
   };
@@ -35,6 +39,7 @@ const SignupForm = () => {
       align="center"
       justify="center"
       bg={useColorModeValue('gray.50', 'gray.800')}
+      backgroundColor="black"
     >
       <Box
         rounded="lg"
@@ -53,14 +58,25 @@ const SignupForm = () => {
               <FormLabel>Username</FormLabel>
               <Input
                 type="text"
+                placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+              />
+            </FormControl>
+            <FormControl id="rollno" isRequired>
+              <FormLabel>Roll Number</FormLabel>
+              <Input
+                type="text"
+                placeholder="22PA1A...."
+                value={rollno}
+                onChange={(e) => setRollno(e.target.value)}
               />
             </FormControl>
             <FormControl id="email" mt={4} isRequired>
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -69,6 +85,7 @@ const SignupForm = () => {
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -77,6 +94,7 @@ const SignupForm = () => {
               <FormLabel>Confirm Password</FormLabel>
               <Input
                 type="password"
+                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -90,6 +108,15 @@ const SignupForm = () => {
             >
               Sign Up
             </Button>
+            <Text textAlign="center" mt={4}>
+              ----- or -----
+            </Text>
+            <Text textAlign="center" mt={2}>
+              Already have an account?{' '}
+              <Link color="blue.500" href="/login">
+                Login here
+              </Link>
+            </Text>
           </form>
         </Stack>
       </Box>
