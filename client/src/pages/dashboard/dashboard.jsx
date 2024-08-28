@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './dash.css'; // Adjust path as needed
-import logo from '../images/vishnu.png';
+import logo from '../../images/vishnu.png'
 import Home from '../home'
 import Footer from '../footer';
-import SignupForm from '../signup';
+import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
@@ -35,11 +35,11 @@ const Dashboard = () => {
             <p>VishnAlumni</p>
           </div>
           <ul>
-            <li><a href="#" onClick={() => setActiveSection('home')}>Home</a></li>
-            <li><a href="#" onClick={() => setActiveSection('interact')}>Interact</a></li>
-            <li><a href="#" onClick={() => setActiveSection('donate')}>Donate</a></li>
-            <li><a href="#" onClick={() => setActiveSection('aboutus')}>About Us</a></li>
-            <li><a href="/signup" >Login/SignUp</a></li>
+            <li><Link to="#" onClick={() => setActiveSection('home')}>Home</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('interact')}>Interact</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('donate')}>Donate</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('aboutus')}>About Us</Link></li>
+            <li><Link to="/signup" >Login/SignUp</Link></li>
             <li>
               
             </li>
