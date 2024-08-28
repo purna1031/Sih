@@ -12,7 +12,7 @@ header {
     right: 0; /* Align at the right edge */
     width: 100%; /* Ensure it spans the full width */
     z-index: 1000;
-    padding: 10px 20px; /* Add some padding for spacing */
+    padding: 10px 15px; /* Add some padding for spacing */
 }
 .main-dash{
   background-color: black;
@@ -48,7 +48,7 @@ nav ul {
 }
 
 nav ul li {
-    margin-left: 25px;
+    margin-left: 10px;
 }
 
 nav ul li a {
