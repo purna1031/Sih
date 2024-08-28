@@ -22,7 +22,7 @@ const SignupForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+  
     if (password !== confirmPassword) {
       console.log('Passwords do not match');
       return;

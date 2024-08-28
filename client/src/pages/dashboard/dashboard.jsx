@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import './dash.css'; // Adjust path as needed
+<<<<<<< HEAD
 import logo from '../images/vishnu.png';
 import Home from '../home';
 import Footer from '../footer';
 import AboutUs from '../aboutus';
+=======
+import logo from '../../images/vishnu.png'
+import Home from '../home'
+import Footer from '../footer';
+import { Link } from 'react-router-dom';
+
+>>>>>>> aae16bf2b4e7e5782e72bce0c8d32341aa1ca699
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -53,6 +61,14 @@ const Dashboard = () => {
             <p>VishnAlumni</p>
           </div>
           <ul>
+<<<<<<< HEAD
+=======
+            <li><Link to="#" onClick={() => setActiveSection('home')}>Home</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('interact')}>Interact</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('donate')}>Donate</Link></li>
+            <li><Link to="#" onClick={() => setActiveSection('aboutus')}>About Us</Link></li>
+            <li><Link to="/signup" >Login/SignUp</Link></li>
+>>>>>>> aae16bf2b4e7e5782e72bce0c8d32341aa1ca699
             <li>
               <a href="javascript:void(0)" onClick={(e) => {e.preventDefault(); setActiveSection('home')}}>
                 Home

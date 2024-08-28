@@ -9,15 +9,15 @@ import {
   Heading,
   Stack,
   useColorModeValue,
+  Text
 } from '@chakra-ui/react';
-
+import { Link } from 'react-router-dom';
 const LoginForm = () => {
   const [rollno, setRollno] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log('Roll No:', rollno);
     console.log('Password:', password);
   };
@@ -70,6 +70,15 @@ const LoginForm = () => {
             >
               Login
             </Button>
+            <Text textAlign="center" mt={4}>
+              ----- or -----
+            </Text>
+            <Text textAlign="center" mt={2}>
+              New Here?{' '}
+              <Link color="blue.500" className=' hover:text-blue-400 underline' to="/signup">
+                SignUp
+              </Link>
+            </Text>
           </form>
         </Stack>
       </Box>
