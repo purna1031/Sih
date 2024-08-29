@@ -11,26 +11,33 @@ import {
   useColorModeValue,
   Text,
   Link,
+  Radio,
+  RadioGroup,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [rollno, setRollno] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('0'); // Default to 'Student'
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    if (password !== confirmPassword) {
-      console.log('Passwords do not match');
-      return;
+
+    try {
+      const response = await axios.post('http://localhost:5000/reg', {
+        username,
+        rollno,
+        email,
+        password,
+        role,
+      });
+      console.log('User registered:', response.data);
+    } catch (error) {
+      console.error('Error registering user:', error);
     }
-    console.log('Username:', username);
-    console.log('Roll Number:', rollno);
-    console.log('Email:', email);
-    console.log('Password:', password);
   };
 
   return (
@@ -90,14 +97,14 @@ const SignupForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
-            <FormControl id="confirm-password" mt={4} isRequired>
-              <FormLabel>Confirm Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+            <FormControl id="role" mt={4} isRequired>
+              <FormLabel>Role</FormLabel>
+              <RadioGroup value={role} onChange={setRole}>
+                <Stack direction="row">
+                  <Radio value="0">Student</Radio>
+                  <Radio value="1">Alumni</Radio>
+                </Stack>
+              </RadioGroup>
             </FormControl>
             <Button
               type="submit"
