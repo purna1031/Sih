@@ -9,11 +9,11 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
+
     "axios": "^1.7.5",
-=======
+
     "chart.js": "^4.4.4",
->>>>>>> b15c67382d6c1e7edd3406f2e1ec9bf4860f2be3
+
     "framer-motion": "^11.3.30",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
