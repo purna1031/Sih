@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './dash.css'; 
-import logo from '../images/vishnu.png';
+import logo from '../../images/vishnu.png'
 import Home from '../home';
 import Footer from '../footer';
 import AboutUs from '../aboutus';
 
 import { Link } from 'react-router-dom';
 
->>>>>>> aae16bf2b4e7e5782e72bce0c8d32341aa1ca699
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('home');
