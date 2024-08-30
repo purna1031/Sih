@@ -15,28 +15,33 @@ import {
   RadioGroup,
 } from '@chakra-ui/react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router';
 const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [rollno, setRollno] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('0'); // Default to 'Student'
+  const [role, setRole] = useState('0'); 
+  const [status, setStatus] = useState(''); 
+  const navigate =useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:5000/reg', {
-        username,
+        name: username,
         rollno,
         email,
         password,
         role,
       });
+        navigate('/')
+      setStatus('User registered successfully!'); // Success feedback
       console.log('User registered:', response.data);
     } catch (error) {
-      console.error('Error registering user:', error);
+      setStatus('Error registering user. Please try again.'); // Error feedback
+      console.error('Error registering user:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -115,6 +120,11 @@ const SignupForm = () => {
             >
               Sign Up
             </Button>
+            {status && ( // Display feedback message
+              <Text color={status.includes('Error') ? 'red.500' : 'green.500'} textAlign="center" mt={4}>
+                {status}
+              </Text>
+            )}
             <Text textAlign="center" mt={4}>
               ----- or -----
             </Text>

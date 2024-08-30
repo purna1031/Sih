@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import alu1 from "./images/12PA1A0339.jpg";
-import alu2 from "./images/19PA1A1202.jpg";
-import alu3 from "./images/13PA1A04A2.jpg"; 
-import alu4 from "./images/17PA1A0152.jpg"; 
-import alu5 from "./images/08PA1A0264.jpg"; 
-import alu6 from "./images/17PA1A1205.jpg"; 
-import alu7 from "./images/15PA1A0407.jpg"; 
-import alu8 from "./images/09PA1A1220.jpg"; 
+import alu1 from "../images/12PA1A0339.jpg";
+import alu2 from "../images/19PA1A1202.jpg";
+import alu3 from "../images/13PA1A04A2.jpg"; 
+import alu4 from "../images/17PA1A0152.jpg"; 
+import alu5 from "../images/08PA1A0264.jpg"; 
+import alu6 from "../images/17PA1A1205.jpg"; 
+import alu7 from "../images/15PA1A0407.jpg"; 
+import alu8 from "../images/09PA1A1220.jpg"; 
 import {
     Heading,
     Text, Stack, Card, CardBody, Image, Center,

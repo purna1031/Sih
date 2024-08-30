@@ -9,17 +9,35 @@ import {
   Heading,
   Stack,
   useColorModeValue,
-  Text
+  Text,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-const LoginForm = () => {
-  const [rollno, setRollno] = useState('');
-  const [password, setPassword] = useState('');
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-  const handleSubmit = (e) => {
+
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [status, setStatus] = useState(''); 
+  const navigate=useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Roll No:', rollno);
-    console.log('Password:', password);
+    
+    try {
+      const response = await axios.post('http://localhost:5000/auth/login', {
+        email,
+        password,
+      });
+
+      setStatus('Login successful!');
+      navigate('/')
+      
+      console.log('Login response:', response.data);
+    } catch (error) {
+      setStatus('Error logging in. Please check your credentials.'); // Error feedback
+      console.error('Error logging in:', error.response ? error.response.data : error.message);
+    }
   };
 
   return (
@@ -43,20 +61,20 @@ const LoginForm = () => {
             Login to your account
           </Heading>
           <form onSubmit={handleSubmit}>
-            <FormControl id="rollno" isRequired>
-              <FormLabel>Roll Number</FormLabel>
+            <FormControl id="email" isRequired>
+              <FormLabel>Email</FormLabel>
               <Input
-                type="text"
-                placeholder='22PA1A....'
-                value={rollno}
-                onChange={(e) => setRollno(e.target.value)}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl id="password" mt={4} isRequired>
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
-                placeholder='Password'
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -70,13 +88,18 @@ const LoginForm = () => {
             >
               Login
             </Button>
+            {status && ( // Display feedback message
+              <Text color={status.includes('Error') ? 'red.500' : 'green.500'} textAlign="center" mt={4}>
+                {status}
+              </Text>
+            )}
             <Text textAlign="center" mt={4}>
               ----- or -----
             </Text>
             <Text textAlign="center" mt={2}>
               New Here?{' '}
-              <Link color="blue.500" className=' hover:text-blue-400 underline' to="/signup">
-                SignUp
+              <Link color="blue.500" className='hover:text-blue-400 underline' to="/signup">
+                Sign Up
               </Link>
             </Text>
           </form>
