@@ -4,8 +4,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import Login from './pages/login';
 import Signup from './pages/signup';
-import Dashboard from './pages/dashboard/dashboard';
-
+import Home from './pages/home';
+import AboutUs from './pages/aboutus';
 const App = () => {
   return (
     <ChakraProvider>
@@ -13,7 +13,8 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/aboutus" element={<AboutUs/>} />
         </Routes>
       </Router>
     </ChakraProvider>

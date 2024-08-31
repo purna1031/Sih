@@ -144,7 +144,8 @@ const AboutUs = () => {
   const currentAlumni = alumniData[currentIndex];
 
   return (
-    <>
+    <><Card 
+    backgroundColor="black">
       <br /><br />
       <Heading
           backgroundColor="black"
@@ -177,8 +178,8 @@ const AboutUs = () => {
                       <Heading size='md'>{currentAlumni.name}</Heading>
                       <Text fontWeight="bold" color="gray.600">{currentAlumni.position}</Text>
                       <Text py='2'>
-                          {currentAlumni.description.length > 300 
-                            ? `${currentAlumni.description.substring(0, 300)}...` 
+                          {currentAlumni.description.length > 3000
+                            ? `${currentAlumni.description.substring(0, 3000)}...` 
                             : currentAlumni.description}
                       </Text>
                   </CardBody>
@@ -222,7 +223,10 @@ const AboutUs = () => {
             <Bar data={data} options={options} />
           </Box>
         </Flex>
-      </Center>
+      </Center><br />
+      <br />
+    </Card>
+      
     </>
   );
 }
