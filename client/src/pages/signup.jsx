@@ -16,14 +16,19 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useContext } from 'react';
+
+
+
 const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [rollno, setRollno] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('0'); 
-  const [status, setStatus] = useState(''); 
+  const [status, setStatus] = useState('');
   const navigate =useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +42,8 @@ const SignupForm = () => {
         role,
       });
         navigate('/')
-      setStatus('User registered successfully!'); // Success feedback
+      setStatus('User registered successfully!'); 
+      setUser(true);
       console.log('User registered:', response.data);
     } catch (error) {
       setStatus('Error registering user. Please try again.'); // Error feedback
