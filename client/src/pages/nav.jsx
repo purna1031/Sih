@@ -24,8 +24,8 @@ const Nav =()=>{
                   </a>
                 </li>
                 <li>
-                  <a href="/donate">
-                    Donate
+                  <a href="/event">
+                    Event
                   </a>
                 </li>
                 <li>
