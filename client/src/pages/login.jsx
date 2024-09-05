@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   Button,
@@ -11,16 +11,17 @@ import {
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import UserContext from './UserContext'; // Import the context
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(''); 
-  const navigate=useNavigate();
+  const [status, setStatus] = useState('');
+  const navigate = useNavigate();
+  const { setLoggedInUser } = useContext(UserContext); // Use context
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -30,12 +31,15 @@ const LoginForm = () => {
         password,
       });
 
+      setLoggedInUser(email); // Update context with the logged-in user
+      localStorage.setItem('loggedInUser', email); // Store user in localStorage
+
       setStatus('Login successful!');
-      navigate('/')
+      navigate('/');
       
       console.log('Login response:', response.data);
     } catch (error) {
-      setStatus('Error logging in. Please check your credentials.'); // Error feedback
+      setStatus('Error logging in. Please check your credentials.');
       console.error('Error logging in:', error.response ? error.response.data : error.message);
     }
   };
@@ -88,7 +92,7 @@ const LoginForm = () => {
             >
               Login
             </Button>
-            {status && ( // Display feedback message
+            {status && (
               <Text color={status.includes('Error') ? 'red.500' : 'green.500'} textAlign="center" mt={4}>
                 {status}
               </Text>

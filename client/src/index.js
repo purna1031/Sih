@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Nav from "../src/pages/nav";
+import { UserProvider } from './pages/UserContext';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <UserProvider>
     <Nav />
     <App />
+    </UserProvider>
   </React.StrictMode>
 );
 
