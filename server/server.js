@@ -10,6 +10,10 @@ import cors from 'cors';
 dotenv.config();
 const app = express();
 
+const corsOptions = {
+  origin: ['http://localhost:3000'], // Ensure this matches your frontend URL
+  credentials: true, // Allow credentials if necessary
+};
 app.use(cors(corsOptions));
 
 app.use(express.json());
