@@ -13,31 +13,36 @@ import {
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UserContext from './UserContext'; // Import the context
+import UserContext from './UserContext'; 
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
-  const { setLoggedInUser } = useContext(UserContext); // Use context
+  const { setLoggedInUser } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post('http://localhost:5000/auth/login', {
         email,
         password,
       });
 
-      setLoggedInUser(email); // Update context with the logged-in user
-      localStorage.setItem('loggedInUser', email); // Store user in localStorage
+      const { token, refreshToken, user } = response.data;
+
+      setLoggedInUser(user); 
+      localStorage.setItem('loggedInUser', JSON.stringify(user)); 
+      localStorage.setItem('accessToken', token);
+      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('role', user.role);
 
       setStatus('Login successful!');
       navigate('/');
       
-      console.log('Login response:', response.data);
+      console.log('Login response:', response.data.user);
     } catch (error) {
       setStatus('Error logging in. Please check your credentials.');
       console.error('Error logging in:', error.response ? error.response.data : error.message);
@@ -50,7 +55,6 @@ const LoginForm = () => {
       align="center"
       justify="center"
       bg={useColorModeValue('gray.50', 'gray.800')}
-      backgroundColor="black"
     >
       <Box
         rounded="lg"

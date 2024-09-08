@@ -1,23 +1,30 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react';
 
-const UserContext = createContext({
-  loggedInUser: null,
-  setLoggedInUser: () => {},
-});
+const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(() => {
+    // Initialize from localStorage
+    const user = localStorage.getItem('loggedInUser');
+    return user ? JSON.parse(user) : null;
+  });
 
-  // Check for a logged-in user in localStorage when the app loads
+  const logout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem('loggedInUser');
+  };
+
+  // Sync context state with localStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem('loggedInUser');
-    if (storedUser) {
-      setLoggedInUser(storedUser);
+    if (loggedInUser) {
+      localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+    } else {
+      localStorage.removeItem('loggedInUser');
     }
-  }, []);
+  }, [loggedInUser]);
 
   return (
-    <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser, logout }}>
       {children}
     </UserContext.Provider>
   );
