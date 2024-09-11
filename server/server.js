@@ -6,13 +6,14 @@ import { registerAdmin } from './ctrl/adminauth.js';
 import authroute from './routes/auth.js';
 import adminroute from './routes/adminauth.js';
 import cors from 'cors';
-
+import Jobrouter from './routes/jobRoute.js';
+import Postrouter from './routes/postRoute.js';
 dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3000'], // Ensure this matches your frontend URL
-  credentials: true, // Allow credentials if necessary
+  origin: ['http://localhost:3000'], 
+  credentials: true, 
 };
 app.use(cors(corsOptions));
 
@@ -36,3 +37,6 @@ app.use('/auth', authroute);
 app.use('/admin', adminroute);
 app.post("/reg", register);
 app.post('/reg-admin', registerAdmin);
+app.use('/api',Jobrouter);
+app.use('/api',Postrouter);
+

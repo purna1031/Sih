@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Box
       as="footer"
-      py={4}
+      py={10}
       px={6}
       borderTopWidth={0}
       color={useColorModeValue('gray.600', 'gray.400')} // Adjusted color for text

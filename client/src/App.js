@@ -7,12 +7,16 @@ import Signup from './pages/signup';
 import Home from './pages/home';
 import AboutUs from './pages/aboutus';
 import Job from './pages/jobdiscuss';
+import Nav from './pages/nav';
+import DonatePage from './pages/donate';
 
 const App = () => {
   return (
     <ChakraProvider>
       <Router>
+        <Nav/>
         <Routes>
+          <Route path='/donate' element={<DonatePage/>} />
           <Route path='/interact' element={<Interact />}/>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

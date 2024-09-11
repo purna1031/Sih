@@ -4,7 +4,6 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(() => {
-    // Initialize from localStorage
     const user = localStorage.getItem('loggedInUser');
     return user ? JSON.parse(user) : null;
   });
@@ -14,7 +13,7 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('loggedInUser');
   };
 
-  // Sync context state with localStorage
+
   useEffect(() => {
     if (loggedInUser) {
       localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));

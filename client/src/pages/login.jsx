@@ -54,7 +54,7 @@ const LoginForm = () => {
       minH="100vh"
       align="center"
       justify="center"
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      bg={useColorModeValue('black', 'gray.800')}
     >
       <Box
         rounded="lg"

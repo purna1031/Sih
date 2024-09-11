@@ -1,5 +1,5 @@
-import { Mongoose, Schema,SchemaType,model,models } from "mongoose";
-
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
 const PostSchema =new Schema({
 
     title:{
@@ -10,9 +10,7 @@ const PostSchema =new Schema({
         type:String,
         required:true
     },
-    link:{
-        type:String,
-    },
+
 
     user:{
         type:Schema.Types.ObjectId,
