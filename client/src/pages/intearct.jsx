@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Editor } from "@tinymce/tinymce-react";
 import {
@@ -15,9 +15,9 @@ import {
   CardBody,
   CardFooter,
 } from "@chakra-ui/react";
-import { useContext } from "react";
 import { AiOutlineLike, AiOutlineComment } from "react-icons/ai";
 import UserContext from "./UserContext";
+import { formatDistanceToNow } from "date-fns";
 
 const Interact = () => {
   const [projects, setProjects] = useState([]);
@@ -26,21 +26,23 @@ const Interact = () => {
   const [showForm, setShowForm] = useState(false);
   const [currentReply, setCurrentReply] = useState({});
   const [selectedProject, setSelectedProject] = useState(null);
+  const { loggedInUser } = useContext(UserContext);
 
   const bgColor = "#ffffff"; // White background color
-  const cardBgColor = "black"; // Light gray background for the card
+  const cardBgColor = "black"; // Card background color
   const textColor = "#333333"; // Dark text color
   const secondaryTextColor = "#666666"; // Secondary text color
   const replyBgColor = "#f0f0f0"; // Light gray background for replies
-  const { loggedInUser } = useContext(UserContext);
 
-  console.log(loggedInUser)
-  // Fetch posts from the backend
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/posts");
-        setProjects(response.data);
+        const postsWithReplies = response.data.map((post) => ({
+          ...post,
+          replies: post.replies || [], // Initialize replies array if missing
+        }));
+        setProjects(postsWithReplies);
       } catch (err) {
         console.error("Error fetching posts:", err);
       }
@@ -56,8 +58,9 @@ const Interact = () => {
         const response = await axios.post("http://localhost:5000/api/posts", {
           title,
           description,
+          replies: [], // Initialize replies array
         });
-        setProjects([...projects, response.data]); // Add the new post to the state
+        setProjects([...projects, response.data]); // Add new post to state
         setTitle("");
         setDescription("");
         setShowForm(false);
@@ -71,15 +74,31 @@ const Interact = () => {
     setCurrentReply((prev) => ({ ...prev, [index]: content }));
   };
 
-  const handleReply = (index) => {
+  // Function to handle replies
+  const handleReply = async (index) => {
     const newProjects = [...projects];
     if (currentReply[index]) {
-      newProjects[index].replies.push(currentReply[index]);
-      setProjects(newProjects);
-      setCurrentReply((prev) => ({ ...prev, [index]: "" }));
+      const updatedPost = {
+        ...newProjects[index],
+        replies: [...newProjects[index].replies, currentReply[index]],
+      };
+
+      try {
+        // Update the post on the server
+        await axios.put(
+          `http://localhost:5000/api/posts/${updatedPost._id}`,
+          updatedPost
+        );
+        newProjects[index] = updatedPost;
+        setProjects(newProjects);
+        setCurrentReply((prev) => ({ ...prev, [index]: "" }));
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
     }
   };
 
+  // Toggle selected project visibility
   const toggleProject = (index) => {
     setSelectedProject(selectedProject === index ? null : index);
   };
@@ -111,7 +130,11 @@ const Interact = () => {
               mb={6}
             >
               <Flex align="center" mb={4}>
-                <Avatar size="md" name="User Name" src="https://bit.ly/broken-link" />
+                <Avatar
+                  size="md"
+                  name={loggedInUser?.name || "User Name"}
+                  src={loggedInUser?.avatarUrl || "https://bit.ly/broken-link"}
+                />
                 <Input
                   placeholder="Title"
                   size="lg"
@@ -129,7 +152,12 @@ const Interact = () => {
                 mb={4}
                 color={textColor}
               />
-              <Button colorScheme="blue" size="lg" w="full" onClick={handleCreate}>
+              <Button
+                colorScheme="blue"
+                size="lg"
+                w="full"
+                onClick={handleCreate}
+              >
                 Post
               </Button>
             </Box>
@@ -149,14 +177,22 @@ const Interact = () => {
             >
               <CardBody>
                 <Flex align="center" mb={4}>
-                  <Avatar size="md" name="User Name" src="https://bit.ly/broken-link" />
+                  <Avatar
+                    size="md"
+                    name={project.userName || "User Name"}
+                    src={project.avatarUrl || "https://bit.ly/broken-link"}
+                  />
                   <Box ml={4}>
                     <Heading fontSize="lg" color={textColor}>
                       {project.title}
                     </Heading>
                     <Text fontSize="sm" color={secondaryTextColor}>
-                      User Name - 2 months ago
-                    </Text>
+  {project.userName || "User Name"} -{" "}
+  {project.createdAt
+    ? `${formatDistanceToNow(new Date(project.createdAt))} ago`
+    : "Unknown time"}
+</Text>
+
                   </Box>
                 </Flex>
                 <Text fontSize="md" mb={4} color={textColor}>
@@ -190,7 +226,8 @@ const Interact = () => {
                           "searchreplace visualblocks code fullscreen",
                           "insertdatetime media table paste code help wordcount",
                         ],
-                        toolbar: "undo redo | formatselect | removeformat | code | help",
+                        toolbar:
+                          "undo redo | formatselect | removeformat | code | help",
                         content_style: `
                           body {
                             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -209,7 +246,9 @@ const Interact = () => {
                         branding: false,
                       }}
                       value={currentReply[index] || ""}
-                      onEditorChange={(content) => handleEditorChange(content, index)}
+                      onEditorChange={(content) =>
+                        handleEditorChange(content, index)
+                      }
                     />
                   </CardBody>
                   <CardFooter flexDirection="column" alignItems="center">
@@ -223,7 +262,12 @@ const Interact = () => {
                     </Button>
                     {project.replies.length > 0 && (
                       <Box mt={4} w="full" textAlign="center">
-                        <Text fontSize="lg" mb={2} fontWeight="bold" color={textColor}>
+                        <Text
+                          fontSize="lg"
+                          mb={2}
+                          fontWeight="bold"
+                          color={textColor}
+                        >
                           Replies:
                         </Text>
                         {project.replies.map((reply, replyIndex) => (
@@ -238,7 +282,11 @@ const Interact = () => {
                             maxW="500px"
                             mx="auto"
                           >
-                            <Flex alignItems="center" justifyContent="center" mb={2}>
+                            <Flex
+                              alignItems="center"
+                              justifyContent="center"
+                              mb={2}
+                            >
                               <Avatar
                                 size="sm"
                                 name="Reply User"

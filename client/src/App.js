@@ -7,11 +7,13 @@ import Signup from './pages/signup';
 import Home from './pages/home';
 import AboutUs from './pages/aboutus';
 import Job from './pages/jobdiscuss';
+import { UserProvider } from '../src/pages/UserContext';
 import Nav from './pages/nav';
 import DonatePage from './pages/donate';
 
 const App = () => {
   return (
+    <UserProvider>
     <ChakraProvider>
       <Router>
         <Nav/>
@@ -26,6 +28,7 @@ const App = () => {
         </Routes>
       </Router>
     </ChakraProvider>
+    </UserProvider>
   );
 };
 
